@@ -32,8 +32,8 @@ var register = function (req, res) {
 //
 var identify = function (req, res) {
   var key = req.param('key');
-  var secret = req.body('secret');
-  var ip = req.body('ip');
+  var secret = req.body.secret;
+  var ip = req.body.ip;
   models.Machine.findOne({ where: { key: key, secret: secret }})
     .then(function (machine) {
       if (!machine)
