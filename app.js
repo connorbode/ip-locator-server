@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var models = require('./models');
+var crypto = require('crypto');
 
 //
 // register 
@@ -10,7 +11,15 @@ var models = require('./models');
 // for the service.
 //
 var register = function (req, res) {
-
+  var key = crypto.randomBytes(16).toString('hex');
+  var secret = crypto.randomBytes(16).toString('hex');
+  models.Machine.create({ key: key, secret: secret })
+    .then(function (machine) {
+      res.status(201).json(machine);
+    })
+    .catch(function (err) {
+      // what
+    });
 };
 
 //
