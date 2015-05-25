@@ -1,0 +1,25 @@
+{
+  "name": "ip-locator-server",
+  "version": "1.0.0",
+  "description": "A service to help determine DHCP assigned IP addresses on the internet.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/connorbode/ip-locator-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/connorbode/ip-locator-server/issues"
+  },
+  "homepage": "https://github.com/connorbode/ip-locator-server",
+  "dependencies": {
+    "express": "^4.12.4",
+    "pg": "^4.3.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.1.0"
+  }
+}
