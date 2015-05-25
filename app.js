@@ -58,7 +58,19 @@ var identify = function (req, res) {
 // of a machine.
 //
 var locate = function (req, res) {
+  var key = req.param('key');
+  models.Machine.findOne({ where: { key: key }})
+    .then(function (machine) {
+      if (!machine)
+        throw { status: 404, message: 'Machine not found!' };
 
+      machine.secret = undefined;
+      res.status(200).json(machine).end();
+    })
+    .catch(function (err) {
+      if (res.status) return res.status(err.status).json(err).end();
+      res.status(500).end();
+    });
 };
 
 //
