@@ -80,7 +80,7 @@ var locate = function (req, res) {
 // This method starts the express server
 //
 var runApp = function () {
-  app.listen(3000);
+  app.listen(process.env.PORT || 3000);
   console.log('server running');
 };
 
