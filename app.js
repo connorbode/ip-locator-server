@@ -33,7 +33,7 @@ var register = function (req, res) {
 var identify = function (req, res) {
   var key = req.params.key;
   var secret = req.body.secret;
-  var ip = req.body.ip;
+  var ip = req.ip;
   models.Machine.findOne({ where: { key: key, secret: secret }})
     .then(function (machine) {
       if (!machine)
