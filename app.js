@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var models = require('./models');
 var crypto = require('crypto');
+var bodyParser = require('body-parser');
 
 //
 // register 
@@ -15,10 +16,10 @@ var register = function (req, res) {
   var secret = crypto.randomBytes(16).toString('hex');
   models.Machine.create({ key: key, secret: secret })
     .then(function (machine) {
-      res.status(201).json(machine);
+      res.status(201).json(machine).end();
     })
     .catch(function (err) {
-      // what
+      res.status(500).end();
     });
 };
 
@@ -30,7 +31,23 @@ var register = function (req, res) {
 // identify its location.
 //
 var identify = function (req, res) {
+  var key = req.param('key');
+  var secret = req.body('secret');
+  var ip = req.body('ip');
+  models.Machine.findOne({ where: { key: key, secret: secret }})
+    .then(function (machine) {
+      if (!machine)
+        throw { status: 404, message: 'Machine not found!' };
 
+      return machine.update({ ip: ip });
+    })
+    .then(function (machine) {
+      res.status(200).json(machine).end();
+    })
+    .catch(function (err) {
+      if (res.status) return res.status(err.status).json(err).end();
+      res.status(500).end();
+    });
 };
 
 //
@@ -67,6 +84,7 @@ var dbFailed = function (err) {
   console.log(err);
 };
 
+app.use(bodyParser.json());
 app.post('/machines', register);
 app.put('/machines/:key', identify);
 app.get('/machines/:key', locate);
