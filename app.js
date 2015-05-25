@@ -3,13 +3,47 @@ var app = express();
 var models = require('./models');
 
 //
+// register 
+// --------
+//
+// This method registers a machine
+// for the service.
+//
+var register = function (req, res) {
+
+};
+
+//
+// identify
+// --------
+//
+// This method allows a machine to
+// identify its location.
+//
+var identify = function (req, res) {
+
+};
+
+//
+// locate
+// ------
+//
+// This method returns the location
+// of a machine.
+//
+var locate = function (req, res) {
+
+};
+
+//
 // runApp
 // ------
 //
 // This method starts the express server
 //
 var runApp = function () {
-  console.log('connected to db');
+  app.listen(3000);
+  console.log('server running');
 };
 
 //
@@ -24,5 +58,8 @@ var dbFailed = function (err) {
   console.log(err);
 };
 
-// connect to db
+app.post('/machines', register);
+app.put('/machines/:key', identify);
+app.get('/machines/:key', locate);
+
 models.sequelize.sync().then(runApp).catch(dbFailed);
