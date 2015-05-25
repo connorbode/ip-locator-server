@@ -31,7 +31,7 @@ var register = function (req, res) {
 // identify its location.
 //
 var identify = function (req, res) {
-  var key = req.param('key');
+  var key = req.params.key;
   var secret = req.body.secret;
   var ip = req.body.ip;
   models.Machine.findOne({ where: { key: key, secret: secret }})
@@ -58,7 +58,7 @@ var identify = function (req, res) {
 // of a machine.
 //
 var locate = function (req, res) {
-  var key = req.param('key');
+  var key = req.params.key;
   models.Machine.findOne({ where: { key: key }})
     .then(function (machine) {
       if (!machine)
