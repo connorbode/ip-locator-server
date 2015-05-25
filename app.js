@@ -3,6 +3,7 @@ var app = express();
 var models = require('./models');
 var crypto = require('crypto');
 var bodyParser = require('body-parser');
+var requestIp = require('request-ip');
 
 //
 // register 
@@ -33,7 +34,7 @@ var register = function (req, res) {
 var identify = function (req, res) {
   var key = req.params.key;
   var secret = req.body.secret;
-  var ip = req.ip;
+  var ip = requestIp.getClientIp(req);
   models.Machine.findOne({ where: { key: key, secret: secret }})
     .then(function (machine) {
       if (!machine)
